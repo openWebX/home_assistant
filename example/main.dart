@@ -1,11 +1,11 @@
 import 'package:home_assistant/home_assistant.dart';
-import 'package:home_assistant/src/models/configuration.dart';
-import 'package:home_assistant/src/models/entity.dart';
-import 'package:home_assistant/src/models/service.dart';
 
 void main() {
   // Initialize Home Assistant
-  final HomeAssistant homeAssistant = HomeAssistant(baseUrl: 'http://example.com', bearerToken: 'your_token');
+  final HomeAssistant homeAssistant = HomeAssistant(
+      baseUrl: 'http://192.168.1.207:8123',
+      bearerToken:
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI2YTU5OGIyNjJjZDY0N2JhYTVhNjJlMDdmNDFlOWNhYyIsImlhdCI6MTcxNzQ4MzIzNCwiZXhwIjoyMDMyODQzMjM0fQ.zwlW71c3w5nMRFPVTXJAlh5YMmOYd0n3R1RuE0WQo84');
   fetchData(homeAssistant);
 }
 
@@ -16,15 +16,15 @@ fetchData(HomeAssistant homeAssistant) async {
   print(config.toJson());
 
   final List<Entity> entities = await homeAssistant.fetchStates();
-  print(entities.first.entityId);
 
-  final Entity entity = await homeAssistant.fetchState(entities.first.entityId);
+  final Entity entity =
+      await homeAssistant.fetchState(entities.first.entityId!);
   print(entity.entityId);
 
   final List<Service> services = await homeAssistant.fetchServices();
   print(services.first.domain);
 
-  homeAssistant.executeService("switch.ceiling_lights_socket_1", "turn_on", additionalActions: {});
+  /*homeAssistant.executeService("switch.ceiling_lights_socket_1", "turn_on", additionalActions: {});
   homeAssistant.executeService("light.bedside_lamp_mercury", "turn_on", additionalActions: {
     "brightness": 255,
     "color_temp": 400,
@@ -35,5 +35,5 @@ fetchData(HomeAssistant homeAssistant) async {
   homeAssistant.executeService("switch.ceiling_lights_socket_1", "turn_off", additionalActions: {});
   homeAssistant.executeService("light.bedside_lamp_mercury", "turn_off", additionalActions: {});
 
-  await Future.delayed(Duration(seconds: 1));
+  await Future.delayed(Duration(seconds: 1));*/
 }

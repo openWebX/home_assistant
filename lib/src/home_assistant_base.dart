@@ -1,6 +1,6 @@
-import 'package:home_assistant/src/models/configuration.dart';
-import 'package:home_assistant/src/models/entity.dart';
-import 'package:home_assistant/src/models/service.dart';
+import 'package:home_assistant/src/models/configuration/configuration.dart';
+import 'package:home_assistant/src/models/entity/entity.dart';
+import 'package:home_assistant/src/models/service/service.dart';
 
 import 'networking/home_assistant_api.dart';
 import 'networking/http_client.dart';
@@ -57,5 +57,6 @@ class HomeAssistant {
     String action, {
     Map<String, dynamic> additionalActions = const {},
   }) =>
-      _api.executeService(entityId, action, additionalActions: additionalActions);
+      _api.executeService(entityId, action,
+          additionalActions: additionalActions);
 }

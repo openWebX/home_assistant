@@ -1,7 +1,8 @@
 import 'dart:convert';
-import 'package:home_assistant/src/models/configuration.dart';
-import 'package:home_assistant/src/models/entity.dart';
-import 'package:home_assistant/src/models/service.dart';
+
+import 'package:home_assistant/src/models/configuration/configuration.dart';
+import 'package:home_assistant/src/models/entity/entity.dart';
+import 'package:home_assistant/src/models/service/service.dart';
 import 'package:home_assistant/src/networking/http_client.dart';
 
 class HomeAssistantApi {
@@ -25,7 +26,8 @@ class HomeAssistantApi {
         return false;
       }
     } else {
-      throw Exception('Failed to verify API is working: ${response.reasonPhrase}');
+      throw Exception(
+          'Failed to verify API is working: ${response.reasonPhrase}');
     }
   }
 
@@ -39,7 +41,8 @@ class HomeAssistantApi {
       Map<String, dynamic> decodedResponse = json.decode(response.body);
       return Configuration.fromJson(decodedResponse);
     } else {
-      throw Exception('Failed to fetch Home Assistant configuration: ${response.reasonPhrase}');
+      throw Exception(
+          'Failed to fetch Home Assistant configuration: ${response.reasonPhrase}');
     }
   }
 
@@ -79,7 +82,8 @@ class HomeAssistantApi {
 
     if (response.statusCode == 200) {
       final List<dynamic> decodedResponse = json.decode(response.body);
-      final List<Service> services = decodedResponse.map((service) => Service.fromJson(service)).toList();
+      final List<Service> services =
+          decodedResponse.map((service) => Service.fromJson(service)).toList();
       return services;
     } else {
       throw Exception('Failed to fetch services: ${response.reasonPhrase}');
@@ -91,7 +95,8 @@ class HomeAssistantApi {
   /// [entityId] is the entity to execute the service on.
   /// Returns a [bool] indicating whether the service call was successful.
   /// The [action] and [additionalActions] parameter is the [Entity.attributes] value for the service
-  Future<bool> executeService(String entityId, String action, {Map<String, dynamic> additionalActions = const {}}) async {
+  Future<bool> executeService(String entityId, String action,
+      {Map<String, dynamic> additionalActions = const {}}) async {
     Map<String, dynamic> data = Map.from(additionalActions);
     data["entity_id"] = entityId;
     final response = await httpClient.post(
